@@ -1,10 +1,10 @@
-name: cc_framing
-project: cc_framing
+name: finetuning_bert
+project: finetuning_bert
 program: allennlp
 command:
   - ${program} #omit the interpreter as we use allennlp train command directly
   - "train-with-wandb" # subcommand
-  - "./cc_framing/tuning/config.jsonnet"
+  - "./cc_framing/tuning/config-bert.jsonnet"
   - "--include-package=cc_framing" # add all packages containing your registered classes here
   - "--include-package=allennlp_models"
   - ${args}
@@ -16,19 +16,19 @@ parameters:
   # hyperparameters start with overrides
   # Ranges
   # Add env. to tell that it is a top level parameter
-  env.transformer_model:
-    values: ["distilbert-base-uncased"]
   env.max_length:
-    values: [128, 256, 512, 640, 768]
+    values: [128, 256]
   env.dropout:
-    values: [0.0, 0.1, 0.3, 0.5, 0.7]
+    values: [0.1, 0.3, 0.5, 0.7]
+  env.pooler_dropout:
+    values: [0.1, 0.3, 0.5, 0.7]
   env.batch_size:
-    values: [8, 16, 32, 64]
+    values: [8, 16]
   env.lr:
-    values: [3e-6, 5e-6, 1e-5, 3e-5, 5e-05, 6e-05]
+    values: [1e-5, 1e-6, 3e-05, 3e-6, 5e-05, 5e-6]
   env.weight_decay:
-    values: [0.0, 0.1, 0.03, 0.01, 0.002, 0.001, 0.0003, 0.0001]
+    values: [0.1, 0.03, 0.01, 0.003, 0.001, 0.0003]
   env.grad_norm:
-    values: [1, 3, 5, 7, 9]
+    values: [2, 5, 7, 9]
   env.lr_scheduler:
     values: ["constant", "slanted_triangular"]
