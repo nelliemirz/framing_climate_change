@@ -1,0 +1,32 @@
+name: finetuning_distilbertbert
+project: finetuning_bert
+program: allennlp
+command:
+  - ${program} #omit the interpreter as we use allennlp train command directly
+  - "train-with-wandb" # subcommand
+  - "./cc_framing/tuning/config-distilbert.jsonnet"
+  - "--include-package=cc_framing" # add all packages containing your registered classes here
+  - "--include-package=allennlp_models"
+  - ${args}
+method: random
+metric:
+  name: validation/weighted_fscore
+  goal: maximize
+parameters:
+  # hyperparameters start with overrides
+  # Ranges
+  # Add env. to tell that it is a top level parameter
+  env.max_length:
+    values: [128, 256, 512, 640]
+  env.dropout:
+    values: [0.1, 0.3, 0.5, 0.7]
+  env.batch_size:
+    values: [8, 16, 32]
+  env.lr:
+    values: [1e-5, 1e-6, 3e-05, 3e-6, 5e-05, 5e-6]
+  env.weight_decay:
+    values: [0.0, 0.1, 0.03, 0.01, 0.002, 0.001, 0.0003, 0.0001]
+  env.grad_norm:
+    values: [2, 5, 7, 9]
+  env.lr_scheduler:
+    values: ["constant", "slanted_triangular"]
