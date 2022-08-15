@@ -35,3 +35,54 @@ Saves the predicted labels into a separate file.
 | -c       | false    | 0       | CUDA device                                                      |                                          |
 | -b       | false    | 32      | size of a batch with test examples to run simultaneously         |
 
+## WandB
+
+#### Installation
+
+```
+$ pip install wandb-allennlp
+$ echo wandb_allennlp >> .allennlp_plugins
+```
+
+#### Logging 
+
+Add a trainer callback in your config file. Use one of the following based on your AllenNLP version:
+
+```
+...,
+trainer: {
+    type: 'callback',
+    callbacks: [
+      ...,
+      {
+        type: 'wandb_allennlp',
+        files_to_save: ['config.json'],
+        files_to_save_at_end: ['*.tar.gz'],
+      },
+      ...,
+    ],
+    ...,
+}
+...
+...
+```
+
+Execute the `train.sh` script. Enter wandb credentials when prompted.
+
+## Hyperparameter Search
+
+1. Create the config as in `./cc_framing/tuning/config.jsonnet`
+
+2. Create a *sweep configuration* file and generate a sweep on the wandb server. Note that the tied parameters that are accepted through environment variables are specified using the prefix `env.` in the sweep config. See example in `./cc_framing/tuning/sweep.yaml`
+
+3. Create the sweep on wandb. E.g.:
+
+```
+$ wandb sweep ./cc_framing/tuning/sweep.yaml
+```
+
+4. Start the search agent.
+
+```
+wandb agent <sweep_id>
+```
