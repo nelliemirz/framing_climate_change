@@ -1,0 +1,11 @@
+allennlp==2.9.3
+allennlp_models==2.9.3
+imbalanced_learn==0.9.1
+imblearn==0.0
+numpy==1.21.5
+pandas==1.4.3
+scikit_learn==1.1.1
+torch==1.11.0
+transformers==4.18.0
+wandb-allennlp
+cached-path==1.1.2
