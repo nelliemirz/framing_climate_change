@@ -69,7 +69,7 @@ trainer: {
 
 Execute the `train.sh` script. Enter wandb credentials when prompted.
 
-## Hyperparameter Search
+#### Hyperparameter Search
 
 1. Create the config as in `./cc_framing/tuning/config.jsonnet`
 
