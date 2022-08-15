@@ -1,11 +1,12 @@
 // This should be a registered name in the Transformers library (see https://huggingface.co/models)
 // OR a path on disk to a serialized transformer model.
-local transformer_model = std.parseJson(std.extVar('transformer_model'));
+local transformer_model = "bert-base-uncased";
 // Inputs longer than this will be truncated.
 // Should not be longer than the max length supported by transformer_model.
 
 local max_length = std.parseJson(std.extVar('max_length'));
 local dropout = std.parseJson(std.extVar('dropout'));
+local pooler_dropout = std.parseJson(std.extVar('pooler_dropout'));
 local batch_size = std.parseJson(std.extVar('batch_size'));
 local lr = std.parseJson(std.extVar('lr'));
 local weight_decay = std.parseJson(std.extVar('weight_decay'));
@@ -27,8 +28,8 @@ local lr_scheduler = std.parseJson(std.extVar('lr_scheduler'));
             },
         },
     },
-    "train_data_path": "../data/frame1_with_rare/train.jsonl",
-    "validation_data_path": "../data/frame1_with_rare/test.jsonl",
+    "train_data_path": "/project/cc_framing/transformer_models/cc_framing/data/frame1_with_rare/TRAIN.jsonl",
+    "validation_data_path": "/project/cc_framing/transformer_models/cc_framing/data/frame1_with_rare/TEST.jsonl",
     "model": {
         "type": "multi_label",
         "text_field_embedder": {
@@ -40,6 +41,12 @@ local lr_scheduler = std.parseJson(std.extVar('lr_scheduler'));
             },
         },
         "dropout": dropout,
+        "seq2vec_encoder": {
+              "type": "bert_pooler",
+              "pretrained_model": transformer_model,
+              "requires_grad": true,
+              "dropout": pooler_dropout,
+    },
     },
     "data_loader": { 
         "batch_sampler": {
@@ -64,8 +71,8 @@ local lr_scheduler = std.parseJson(std.extVar('lr_scheduler'));
             ],
         },
         "validation_metric": "+weighted_fscore",
-        "patience": 10,
-        "num_epochs": 50,
+        "patience": 5,
+        "num_epochs": 100,
         "grad_norm": grad_norm,
         "learning_rate_scheduler": {
             "type": lr_scheduler,
@@ -77,13 +84,5 @@ local lr_scheduler = std.parseJson(std.extVar('lr_scheduler'));
        "files_to_save": ["config.json"]
        },
     ],
-   "overrides": {
-        "sampler": {
-            "type": "weighted_random",
-            "weights": [1.76652893, 1.06475716, 1.09475032, 0.9965035, 0.83577713, 0.36663808, 6.47727273, 11.1038961, 0.53237858, 19.43181818, 0.67588933],
-            "num_samples": 5,
-            "replacement": false
-        },
-},
 },
 }
