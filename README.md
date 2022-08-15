@@ -71,7 +71,7 @@ Execute the `train.sh` script. Enter wandb credentials when prompted.
 
 #### Hyperparameter Search
 
-1. Create the config as in `./cc_framing/tuning/config.jsonnet`
+1. Create the config as in `./cc_framing/tuning/config-bert.jsonnet`
 
 2. Create a *sweep configuration* file and generate a sweep on the wandb server. Note that the tied parameters that are accepted through environment variables are specified using the prefix `env.` in the sweep config. See example in `./cc_framing/tuning/sweep.yaml`
 
