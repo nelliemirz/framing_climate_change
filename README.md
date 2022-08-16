@@ -25,7 +25,6 @@ Script for preprocessing the dataset. Take's path to a file in tsv format, outpu
 | --drop-rare        | false     | false   | whether to remove rare labels                                    |
 | --min-size         | false     | 20      | the minimal number of times a label should appear in the dataset (used together with --drop-rare          |
 | --top3-split       | false     | false   | split the dataset into two: one containing top 3 most frequently appearing labels, another - the rest of the labels |
-
 | --no-prep          | false     | false      | to not do preprocessing                                       |
 
 
