@@ -7,7 +7,28 @@ Model for the multi-class classification of framing in article paragraphs. Built
 pip install -r requirements.
 ```
 
+
 ## Commands
+
+
+#### cc_framing/data/preprocess.py
+Script for preprocessing the dataset. Take's path to a file in tsv format, output's the preprocessed data in jsonl format.
+
+
+| Argument           | Required | Default | Description                                                      |
+|:-------------------|:----------|:--------|:-----------------------------------------------------------------|
+| --path             | true      |         | path to dataset                                                  |
+| --para-frame       | true      |         | which para-framing to process: 1 or 2                            |
+| --split            | false     | false   | whether to split data into train/test                            |
+| --val              | false     | false   | whether to additionaly split test set into test/val              |  
+| --test-size        | false     | 0.2     | size of a test set                                               |
+| --drop-rare        | false     | false   | whether to remove rare labels                                    |
+| --min-size         | false     | 20      | the minimal number of times a label should appear in the dataset (used together with --drop-rare          |
+| --top3-split       | false     | false   | split the dataset into two: one containing top 3 most frequently appearing labels, another - the rest of the labels |
+
+| --no-prep          | false     | false      | to not do preprocessing                                       |
+
+
 
 #### train.sh
 Script for training a model based on AllenNLP `train` command.
