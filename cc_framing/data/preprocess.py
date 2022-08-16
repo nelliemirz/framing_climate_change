@@ -11,7 +11,7 @@ def parse_args():
 
     parser.add_argument(
         '--path', dest='FILE_PATH',
-        help='Path to file in jsonl format',
+        help='Path to file in tsv format',
         type=str, required=True
     )
 
